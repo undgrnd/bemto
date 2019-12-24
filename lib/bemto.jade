@@ -17,6 +17,7 @@ mixin b(options)
   - var tag = options && options.tag || ( typeof options == 'string' ? options : '')
   - var isElement = options && options.isElement
   - var tagMetadata = options && options.metadata
+  - var ref = options && options.b
   - var block_sets_context = false
   if attributes.class
     //- Creating and normalizing bemto classes
@@ -43,7 +44,10 @@ mixin b(options)
 
       //- Use block as a context for the first class if we're at element
       if is_first_object && isElement
-        - bemto_object['context'] = bemto_chain[bemto_chain.length - 1]
+        if ref
+          - bemto_object['context'] = [ref]
+        else
+          - bemto_object['context'] = bemto_chain[bemto_chain.length - 1]
 
 
       //- If the class is a modifier, add it to the previous object
